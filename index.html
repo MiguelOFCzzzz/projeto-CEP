@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Avaliação de Desempenho - SENAI</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo-cebraspe">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShXFe1srImBdyp76Jlc16D0MbZAETqqz7PHA&s" alt="Cebraspe" class="img-logo">
+        </div>
+
+        <div class="info-prova">
+            <h1>Avaliação de Desempenho de Estudante 2025 - 2ª Etapa</h1>
+            <p>
+                <span id="displayNome" style="font-weight: bold;">Estudante</span> 
+                (123.456.789-00) | <a href="login.html" onclick="localStorage.clear()">Sair</a>
+            </p>
+        </div>
+
+        <div class="logo-senai">
+            <img src="https://logodownload.org/wp-content/uploads/2019/08/senai-logo-1.png" alt="SENAI" class="img-logo">
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="timer">Restam: <strong>1 h 51 min</strong></div>
+            <div class="sidebar-menu">
+                <div class="status-count"><span class="circle filled">4</span> Respondidas</div>
+                <div class="status-count"><span class="circle empty">36</span> Em branco</div>
+            </div>
+            
+            <div class="nav-questoes">
+                <div class="nav-header">QUESTÕES DA PROVA</div>
+                <div class="grid-questoes">
+                    <div class="q-num active">1</div>
+                    <div class="q-num active">2</div>
+                    <div class="q-num active">3</div>
+                    <div class="q-num active">4</div>
+                    <div class="q-num current">5</div>
+                    <div class="q-num">6</div>
+                    <div class="q-num">7</div>
+                    <div class="q-num">8</div>
+                    <div class="q-num">9</div>
+                    <div class="q-num">10</div>
+                </div>
+            </div>
+            <button class="finish-btn">Finalizar prova</button>
+        </aside>
+
+        <main class="content">
+            <div class="questao-header">Questão 5 - Desenvolvimento de Sistemas</div>
+            <div class="questao-body">
+                <p class="enunciado">O diagrama de casos de uso apresenta a relação do ator "Professor" com os casos de uso "Registrar nota" e "Gerar média"...</p>
+                
+                <div class="diagrama-box">
+                    <img src="caminho_da_sua_imagem_do_diagrama.jpg" alt="Diagrama de Casos de Uso" style="max-width: 100%;">
+                </div>
+
+                <div class="alternativas">
+                    <label class="alt-item"><input type="radio" name="q5"> <span>a) Alternativa A...</span></label>
+                    <label class="alt-item"><input type="radio" name="q5"> <span>b) Alternativa B...</span></label>
+                    <label class="alt-item"><input type="radio" name="q5"> <span>c) Alternativa C...</span></label>
+                    <label class="alt-item"><input type="radio" name="q5"> <span>d) Alternativa D...</span></label>
+                </div>
+                <button class="clear-btn">Apagar resposta</button>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        const nomeSalvo = localStorage.getItem('usuarioNome');
+        if (nomeSalvo) {
+            document.getElementById('displayNome').innerText = nomeSalvo.toUpperCase();
+        } else {
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

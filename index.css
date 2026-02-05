@@ -1,0 +1,243 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+}
+
+/* Header */
+.main-header {
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 4px solid #f39200;
+}
+
+.img-logo {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+}
+
+.info-prova {
+    text-align: center;
+}
+
+.info-prova h1 {
+    font-size: 16px;
+    color: #333;
+}
+
+.info-prova p {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Layout Container */
+.container {
+    display: flex;
+    height: calc(100vh - 75px);
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #002d5e;
+    color: white;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.timer {
+    background-color: #000;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.status-count {
+    font-size: 13px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.circle {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.circle.filled { background-color: #2c5ba3; border: 1px solid white; }
+.circle.empty { border: 1px solid white; }
+
+.nav-questoes {
+    margin-top: 20px;
+    background-color: #3b5a8c;
+    flex-grow: 1;
+}
+
+.nav-header {
+    background-color: #1e3a6d;
+    padding: 8px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.grid-questoes {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    padding: 10px;
+}
+
+.q-num {
+    background-color: white;
+    color: #333;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.q-num.active { background-color: #2c5ba3; color: white; }
+.q-num.current { background-color: #f39200; color: white; }
+
+.finish-btn {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Content Area */
+.content {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.questao-header {
+    background-color: #f39200;
+    color: white;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.questao-body {
+    padding: 30px;
+    background-color: white;
+    min-height: 100%;
+}
+
+.diagrama-box {
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    background-color: #fff9e6;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.alternativas {
+    margin: 20px 0;
+}
+
+.alt-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.alt-item input {
+    margin-right: 10px;
+    margin-top: 4px;
+}
+
+.clear-btn {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+/* Tela de Login */
+.login-page {
+    background-color: #e9ecef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-card {
+    background: white;
+    padding: 30px;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-top: 5px solid #f39200;
+}
+
+.login-header-img {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-header-img img {
+    height: 60px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.start-btn {
+    width: 100%;
+    background-color: #004a8e;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
