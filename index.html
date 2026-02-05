@@ -2,82 +2,171 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Avaliação de Desempenho - SENAI</title>
+    <title>Avaliação SENAI/Cebraspe - Programação</title>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-
     <header class="main-header">
-        <div class="logo-cebraspe">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShXFe1srImBdyp76Jlc16D0MbZAETqqz7PHA&s" alt="Cebraspe" class="img-logo">
-        </div>
-
+        <div class="logo-cebraspe"><img src="https://www.inoversasul.org/wp-content/uploads/2025/08/cebaspe1.png" class="img-logo"></div>
         <div class="info-prova">
-            <h1>Avaliação de Desempenho de Estudante 2025 - 2ª Etapa</h1>
-            <p>
-                <span id="displayNome" style="font-weight: bold;">Estudante</span> 
-                (123.456.789-00) | <a href="login.html" onclick="localStorage.clear()">Sair</a>
-            </p>
+            <h1>Avaliação de Desempenho de Estudante 2025</h1>
+            <p><span id="displayNome">...</span> (123.456.789-00) | <a href="login.html">Sair</a></p>
         </div>
-
-        <div class="logo-senai">
-            <img src="https://logodownload.org/wp-content/uploads/2019/08/senai-logo-1.png" alt="SENAI" class="img-logo">
-        </div>
+        <div class="logo-senai"><img src="https://logodownload.org/wp-content/uploads/2019/08/senai-logo-1.png" class="img-logo"></div>
     </header>
 
     <div class="container">
         <aside class="sidebar">
-            <div class="timer">Restam: <strong>1 h 51 min</strong></div>
-            <div class="sidebar-menu">
-                <div class="status-count"><span class="circle filled">4</span> Respondidas</div>
-                <div class="status-count"><span class="circle empty">36</span> Em branco</div>
-            </div>
-            
+            <div class="timer">Restam: <strong id="clock">01:51:00</strong></div>
+            <div class="status-count"><span class="circle filled" id="count-res">0</span> Respondidas</div>
+            <div class="status-count"><span class="circle" id="count-white">5</span> Em branco</div>
             <div class="nav-questoes">
                 <div class="nav-header">QUESTÕES DA PROVA</div>
-                <div class="grid-questoes">
-                    <div class="q-num active">1</div>
-                    <div class="q-num active">2</div>
-                    <div class="q-num active">3</div>
-                    <div class="q-num active">4</div>
-                    <div class="q-num current">5</div>
-                    <div class="q-num">6</div>
-                    <div class="q-num">7</div>
-                    <div class="q-num">8</div>
-                    <div class="q-num">9</div>
-                    <div class="q-num">10</div>
-                </div>
+                <div class="grid-questoes" id="grid"></div>
             </div>
-            <button class="finish-btn">Finalizar prova</button>
+            <button class="finish-btn" onclick="finalizarProva()">Finalizar prova</button>
         </aside>
 
         <main class="content">
-            <div class="questao-header">Questão 5 - Desenvolvimento de Sistemas</div>
+            <div class="questao-header" id="q-header">Questão 1</div>
             <div class="questao-body">
-                <p class="enunciado">O diagrama de casos de uso apresenta a relação do ator "Professor" com os casos de uso "Registrar nota" e "Gerar média"...</p>
-                
-                <div class="diagrama-box">
-                    <img src="caminho_da_sua_imagem_do_diagrama.jpg" alt="Diagrama de Casos de Uso" style="max-width: 100%;">
-                </div>
-
-                <div class="alternativas">
-                    <label class="alt-item"><input type="radio" name="q5"> <span>a) Alternativa A...</span></label>
-                    <label class="alt-item"><input type="radio" name="q5"> <span>b) Alternativa B...</span></label>
-                    <label class="alt-item"><input type="radio" name="q5"> <span>c) Alternativa C...</span></label>
-                    <label class="alt-item"><input type="radio" name="q5"> <span>d) Alternativa D...</span></label>
-                </div>
-                <button class="clear-btn">Apagar resposta</button>
+                <p id="q-enunciado" style="white-space: pre-wrap;"></p>
+                <div class="diagrama-box" id="q-img-container"><img src="" id="q-img" style="max-height: 250px;"></div>
+                <div class="alternativas" id="q-options"></div>
+                <button class="clear-btn" onclick="limparResposta()">Apagar resposta</button>
             </div>
+            <footer class="nav-footer">
+                <button class="btn-nav" id="btn-prev" onclick="mudarQuestao(-1)">ANTERIOR</button>
+                <button class="btn-nav" id="btn-next" onclick="mudarQuestao(1)">PRÓXIMA</button>
+            </footer>
         </main>
     </div>
-    
+
+    <div id="telaFinal" class="screen-final">
+        <div class="final-card">
+            <div class="icon-success">✓</div>
+            <h2>Prova Finalizada com Sucesso!</h2>
+            <p>Obrigado, <strong id="nomeFinal"></strong>.</p>
+            <p>Suas respostas foram registradas no sistema.</p>
+            <hr style="margin: 20px 0; border:0; border-top:1px solid #eee;">
+            <p id="dataFinal" style="font-size: 14px; color: #666;"></p>
+            <button class="btn-voltar-inicio" onclick="window.location.href='login.html'">Sair do Sistema</button>
+        </div>
+    </div>
+
     <script>
-        const nomeSalvo = localStorage.getItem('usuarioNome');
-        if (nomeSalvo) {
-            document.getElementById('displayNome').innerText = nomeSalvo.toUpperCase();
-        } else {
-            window.location.href = 'login.html';
+        // --- CONFIGURAÇÃO DO CRONÔMETRO ---
+        let tempoSegundos = (1 * 3600) + (51 * 60); 
+
+        function iniciarCronometro() {
+            const display = document.getElementById('clock');
+            const intervalo = setInterval(() => {
+                let h = Math.floor(tempoSegundos / 3600);
+                let m = Math.floor((tempoSegundos % 3600) / 60);
+                let s = tempoSegundos % 60;
+                display.innerText = (h<10?"0"+h:h)+":"+(m<10?"0"+m:m)+":"+(s<10?"0"+s:s);
+                if (tempoSegundos <= 0) { clearInterval(intervalo); finalizarProva(true); } 
+                else { tempoSegundos--; }
+            }, 1000);
         }
+
+        // --- QUESTÕES DE PROGRAMAÇÃO ---
+        const bancoQuestões = [
+            { 
+                id: 1, 
+                text: "No JavaScript, qual é a diferença principal entre as palavras-chave 'let' e 'var'?", 
+                opts: [
+                    "'var' tem escopo de bloco, enquanto 'let' tem escopo de função.",
+                    "'let' permite hoisting e 'var' não permite.",
+                    "'let' tem escopo de bloco e não permite redeclaração no mesmo escopo, enquanto 'var' tem escopo de função.",
+                    "Não há diferença, ambas funcionam exatamente da mesma forma em navegadores modernos."
+                ], 
+                img: "" 
+            },
+            { 
+                id: 2, 
+                text: "Qual seletor CSS é utilizado para selecionar todos os elementos <p> que são filhos diretos de um elemento <div>?", 
+                opts: ["div p", "div > p", "div + p", "div ~ p"], 
+                img: "" 
+            },
+            { 
+                id: 3, 
+                text: "Analise o código abaixo:\n\nconst frutas = ['Maçã', 'Banana', 'Uva'];\nfrutas.push('Laranja');\n\nQual será o valor da variável 'frutas' após a execução?", 
+                opts: [
+                    "['Laranja', 'Maçã', 'Banana', 'Uva']",
+                    "['Maçã', 'Banana', 'Laranja']",
+                    "['Maçã', 'Banana', 'Uva', 'Laranja']",
+                    "O código resultará em erro pois arrays são constantes."
+                ], 
+                img: "" 
+            },
+            { 
+                id: 4, 
+                text: "Qual das alternativas define corretamente o conceito de 'DOM' no desenvolvimento web?", 
+                opts: [
+                    "É um protocolo de comunicação entre o servidor e o cliente.",
+                    "É uma interface de programação que representa documentos HTML como uma estrutura de árvore.",
+                    "É uma linguagem de estilo utilizada para formatar páginas estáticas.",
+                    "É o motor de renderização exclusivo do navegador Google Chrome."
+                ], 
+                img: "" 
+            },
+            { 
+                id: 5, 
+                text: "Em SQL, qual comando é utilizado para remover todos os registros de uma tabela sem excluir a estrutura da própria tabela?", 
+                opts: ["DELETE TABLE", "DROP TABLE", "TRUNCATE TABLE", "REMOVE ALL"], 
+                img: "" 
+            }
+        ];
+
+        let atual = 0, respostas = {};
+
+        function renderizar() {
+            const q = bancoQuestões[atual];
+            document.getElementById('q-header').innerText = `Questão ${q.id}`;
+            document.getElementById('q-enunciado').innerText = q.text;
+            const imgCont = document.getElementById('q-img-container');
+            if(q.img) { imgCont.style.display = 'block'; document.getElementById('q-img').src = q.img; }
+            else { imgCont.style.display = 'none'; }
+            const optCont = document.getElementById('q-options');
+            optCont.innerHTML = '';
+            q.opts.forEach((o, i) => {
+                const checked = respostas[q.id] === i ? 'checked' : '';
+                optCont.innerHTML += `<label class="alt-item"><input type="radio" name="opt" onclick="marcar(${q.id}, ${i})" ${checked}><span>${String.fromCharCode(97+i)}) ${o}</span></label>`;
+            });
+            document.getElementById('btn-prev').disabled = atual === 0;
+            document.getElementById('btn-next').disabled = atual === bancoQuestões.length - 1;
+            atualizarSidebar();
+        }
+
+        function marcar(id, opt) { respostas[id] = opt; atualizarSidebar(); }
+        function mudarQuestao(dir) { atual += dir; renderizar(); }
+        function limparResposta() { delete respostas[bancoQuestões[atual].id]; renderizar(); }
+        function irPara(idx) { atual = idx; renderizar(); }
+
+        function atualizarSidebar() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            bancoQuestões.forEach((q, i) => {
+                let s = i === atual ? 'current' : (respostas[q.id] !== undefined ? 'active' : '');
+                grid.innerHTML += `<div class="q-num ${s}" onclick="irPara(${i})">${q.id}</div>`;
+            });
+            const r = Object.keys(respostas).length;
+            document.getElementById('count-res').innerText = r;
+            document.getElementById('count-white').innerText = bancoQuestões.length - r;
+        }
+
+        function finalizarProva(automatico = false) {
+            if(automatico || confirm("Finalizar prova?")) {
+                document.getElementById('nomeFinal').innerText = (localStorage.getItem('usuarioNome') || 'Estudante').toUpperCase();
+                document.getElementById('dataFinal').innerText = "Encerrado em: " + new Date().toLocaleString();
+                document.getElementById('telaFinal').classList.add('active');
+            }
+        }
+
+        document.getElementById('displayNome').innerText = (localStorage.getItem('usuarioNome') || 'Estudante').toUpperCase();
+        renderizar();
+        iniciarCronometro();
     </script>
 </body>
 </html>

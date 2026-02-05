@@ -6,16 +6,13 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body class="login-page">
-
     <div class="login-container">
         <div class="login-header-img">
-            <img src="https://logodownload.org/wp-content/uploads/2014/05/senai-logo-1.png" alt="SENAI">
-            <p style="color: #004a8e; font-weight: bold; font-size: 14px; margin-top: 10px;">SATE: Sistema de Avaliação</p>
+            <img src="https://logodownload.org/wp-content/uploads/2019/08/senai-logo-1.png" alt="SENAI">
+            <p>SATE: Sistema de Avaliação de Testes Eletrônicos</p>
         </div>
-
         <main class="login-card">
-            <h2 style="margin-bottom: 15px; font-size: 18px;">Identificação do Estudante</h2>
-            
+            <h2>Identificação do Estudante</h2>
             <form id="loginForm">
                 <div class="form-group">
                     <label>Nome Completo</label>
@@ -29,12 +26,10 @@
             </form>
         </main>
     </div>
-
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const nomeEstudante = document.getElementById('nome').value;
-            localStorage.setItem('usuarioNome', nomeEstudante);
+            localStorage.setItem('usuarioNome', document.getElementById('nome').value);
             window.location.href = 'index.html';
         });
     </script>
